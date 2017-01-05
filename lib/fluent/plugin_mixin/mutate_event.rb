@@ -28,7 +28,8 @@ module Fluent
       end
 
       def prune
-        delete_proc = proc do |_,v|
+        delete_proc = proc do |*args|
+          if args.length == 1 then v = args[0] else v = args[1] end
           v.delete_if(&delete_proc) if v.respond_to?(:delete_if)
           v.nil? || v.respond_to?(:empty?) && v.empty?
         end
