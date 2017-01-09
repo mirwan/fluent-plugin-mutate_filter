@@ -211,10 +211,10 @@ module Fluent
         reference_value = case reference_tag
                           when "event_time" then event.event_time.to_s
                           when "event_tag"  then event.event_tag
-                          else  event.get(reference_tag.downcase).to_s
+                          else  event.get(reference_tag).to_s
                           end
         if reference_value.nil?
-          @log.error "failed to replace tag", field: reference_tag.downcase
+          @log.error "failed to replace tag", field: reference_tag
           reference_value = match.to_s
         end
 
