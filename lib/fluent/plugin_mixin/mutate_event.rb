@@ -27,7 +27,7 @@ module Fluent
           break if item.nil?
           case item.class.to_s
             when "Hash" then item = item[key]
-            when "Array" then item = item[key.to_i]
+            when "Array" then item = item[Integer(key)]
             else item = nil
           end
         end
