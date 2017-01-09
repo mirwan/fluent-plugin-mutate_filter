@@ -9,6 +9,10 @@ module Fluent
         @expand_nesting = expand_nesting
       end
 
+      unless method_defined?(:log)
+        define_method("log") { $log }
+      end
+
       attr_accessor :event_time
       attr_accessor :event_tag
 
@@ -21,7 +25,11 @@ module Fluent
 
         keys.each do |key|
           break if item.nil?
-          item = item.is_a?(Hash) ? item[key] : nil
+          case item.class.to_s
+            when "Hash" then item = item[key]
+            when "Array" then item = item[key.to_i]
+            else item = nil
+          end
         end
 
         item
